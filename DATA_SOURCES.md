@@ -38,3 +38,15 @@ The tool can also ingest the 16 documented AI-misuse cases from the
 `ai-threat-intel-analysis` project as case-record input, to show the same clustering logic
 grouping actors by sponsor and campaign period. That project's data is built from public
 threat reports and is described in its own repository.
+
+## A note on secret-scanning alerts
+
+The vendored MISP campaign files under `data/campaigns/` contain SHA-256 file hashes as
+`sha256` indicator attributes (for example in the Volta Stealer and Ukraine-Russia campaigns).
+These are legitimate malware sample hashes from Infoblox's public threat-intelligence feed, and
+they are the point of the data: an IOC tool is expected to hold indicators of compromise.
+
+Automated secret scanners flag any 64-character hexadecimal string as a possible high-entropy
+secret, so these hashes trigger a false-positive alert. They are not credentials, API keys,
+tokens, or private keys, and nothing here needs to be revoked. The alerts are safe to dismiss as
+false positives.
